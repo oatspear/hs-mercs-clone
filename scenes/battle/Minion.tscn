@@ -1,0 +1,280 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/orc-face.png" type="Texture" id=1]
+[ext_resource path="res://scenes/battle/Minion.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0.937255, 0.894118, 0.45098, 1 )
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id=2]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Animation" id=3]
+resource_name = "attack_begin"
+length = 1.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Parts/Sprite/Texture:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "attack_end"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Parts/Sprite/Texture:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "cast_begin"
+length = 1.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "cast_end"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "damage"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Parts/Sprite/Texture:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "heal"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.0627451, 0.92549, 0.439216, 1 ), Color( 1, 1, 1, 1 ), Color( 0.0627451, 0.92549, 0.439216, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Minion" type="PanelContainer"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Parts" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 93.0
+margin_bottom = 125.0
+
+[node name="Status" type="Label" parent="Parts"]
+margin_right = 86.0
+margin_bottom = 14.0
+mouse_filter = 1
+text = "Status"
+align = 1
+uppercase = true
+
+[node name="Sprite" type="MarginContainer" parent="Parts"]
+margin_top = 18.0
+margin_right = 86.0
+margin_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Texture" type="TextureRect" parent="Parts/Sprite"]
+margin_right = 86.0
+margin_bottom = 64.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="Highlight" type="Panel" parent="Parts/Sprite"]
+margin_right = 86.0
+margin_bottom = 64.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stats" type="HBoxContainer" parent="Parts"]
+margin_top = 86.0
+margin_right = 86.0
+margin_bottom = 100.0
+
+[node name="AttackLabel" type="Label" parent="Parts/Stats"]
+margin_right = 13.0
+margin_bottom = 14.0
+mouse_filter = 1
+text = "A:"
+
+[node name="AttackValue" type="Label" parent="Parts/Stats"]
+margin_left = 17.0
+margin_right = 33.0
+margin_bottom = 14.0
+mouse_filter = 1
+text = "00"
+
+[node name="HSeparator" type="HSeparator" parent="Parts/Stats"]
+margin_left = 37.0
+margin_right = 48.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="HealthLabel" type="Label" parent="Parts/Stats"]
+margin_left = 52.0
+margin_right = 66.0
+margin_bottom = 14.0
+mouse_filter = 1
+text = "H:"
+
+[node name="HealthValue" type="Label" parent="Parts/Stats"]
+margin_left = 70.0
+margin_right = 86.0
+margin_bottom = 14.0
+mouse_filter = 1
+text = "00"
+
+[node name="Tag" type="Label" parent="Parts"]
+margin_top = 104.0
+margin_right = 86.0
+margin_bottom = 118.0
+mouse_filter = 1
+text = "Minion Type"
+align = 1
+uppercase = true
+
+[node name="Overlay" type="MarginContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 93.0
+margin_bottom = 125.0
+mouse_filter = 1
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+
+[node name="SpeedTag" type="PanelContainer" parent="Overlay"]
+margin_left = 46.0
+margin_top = 49.0
+margin_right = 82.0
+margin_bottom = 69.0
+mouse_filter = 1
+size_flags_horizontal = 8
+size_flags_vertical = 4
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox" type="HBoxContainer" parent="Overlay/SpeedTag"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 34.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 32, 16 )
+alignment = 1
+
+[node name="SpeedLabel" type="Label" parent="Overlay/SpeedTag/HBox"]
+margin_left = 5.0
+margin_top = 1.0
+margin_right = 16.0
+margin_bottom = 15.0
+mouse_filter = 1
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "S:"
+
+[node name="SpeedValue" type="Label" parent="Overlay/SpeedTag/HBox"]
+margin_left = 20.0
+margin_top = 1.0
+margin_right = 26.0
+margin_bottom = 15.0
+mouse_filter = 1
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "?"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/attack_begin = SubResource( 3 )
+anims/attack_end = SubResource( 4 )
+anims/cast_begin = SubResource( 7 )
+anims/cast_end = SubResource( 8 )
+anims/damage = SubResource( 5 )
+anims/heal = SubResource( 6 )
+
+[connection signal="gui_input" from="." to="." method="_on_Minion_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_Minion_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Minion_mouse_exited"]

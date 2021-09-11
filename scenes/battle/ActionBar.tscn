@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/battle/ActionBar.gd" type="Script" id=1]
+
+[node name="ActionBar" type="MarginContainer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+rect_min_size = Vector2( 0, 40 )
+custom_constants/margin_bottom = 8
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox" type="HBoxContainer" parent="."]
+margin_right = 640.0
+margin_bottom = 32.0
+custom_constants/separation = 12
+alignment = 1
+
+[node name="Back" type="Button" parent="HBox"]
+margin_left = 52.0
+margin_right = 94.0
+margin_bottom = 32.0
+text = "Back"
+
+[node name="Skill1" type="Button" parent="HBox"]
+margin_left = 106.0
+margin_right = 242.0
+margin_bottom = 32.0
+text = "Ability 1 (S: 5) (C: 0)"
+
+[node name="Skill2" type="Button" parent="HBox"]
+margin_left = 254.0
+margin_right = 390.0
+margin_bottom = 32.0
+text = "Ability 1 (S: 5) (C: 0)"
+
+[node name="Skill3" type="Button" parent="HBox"]
+margin_left = 402.0
+margin_right = 538.0
+margin_bottom = 32.0
+text = "Ability 1 (S: 5) (C: 0)"
+
+[node name="Skip" type="Button" parent="HBox"]
+margin_left = 550.0
+margin_right = 588.0
+margin_bottom = 32.0
+text = "Skip"
+
+[connection signal="pressed" from="HBox/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="HBox/Skill1" to="." method="_on_Skill1_pressed"]
+[connection signal="pressed" from="HBox/Skill2" to="." method="_on_Skill2_pressed"]
+[connection signal="pressed" from="HBox/Skill3" to="." method="_on_Skill3_pressed"]
+[connection signal="pressed" from="HBox/Skip" to="." method="_on_Skip_pressed"]
