@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mercs.png-021f2789c74614bc768596386a04524d.stex"
+path="res://.import/mercs.png-3c3eb8104acfd5d3cfdd8dfddc4880db.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://build/mercs.png"
-dest_files=[ "res://.import/mercs.png-021f2789c74614bc768596386a04524d.stex" ]
+source_file="res://docs/mercs.png"
+dest_files=[ "res://.import/mercs.png-3c3eb8104acfd5d3cfdd8dfddc4880db.stex" ]
 
 [params]
 
