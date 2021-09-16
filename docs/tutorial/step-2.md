@@ -100,3 +100,31 @@ This area is supposed to be the main focus of our game, and it should take as mu
 Change its *Size Flags* in the node Inspector. Make sure to check *Expand* under the horizontal flags.
 
 ![Size Expand flags](./step-2-size-expand.PNG)
+
+We can identify two main sub-areas within the battle area: the **action bar**, and the actual **battle arena**.
+The action bar is going to be implemented in its own scene, and should be placed at the bottom.
+Just use `PanelContainer` as a placeholder.
+For the core battle area, we will use another `VBoxContainer`, called `Battlers`.
+
+**Optional:** to keep the action bar at the bottom, change the *Alignment* property of the `BattleArea` container, in the node Inspector, to *End*.
+In addition, change the *Size Flags* of the new `Battlers` container, and make sure to check *Expand* both in the Horizontal and in the Vertical sections.
+
+Change the *Alignment* of the new `Battlers` container to *Center*, so our minions battle at the center of this area.
+
+Speaking of which, how should we lay out the main participants of the battle interface?
+This should be easy.
+They are organized in two rows, so we can use two `HBoxContainer`, called `EnemyTeam` and `PlayerTeam`, to display the enemy minions and the player minions, respectively.
+Just for decoration, we are going to add an `HSeparator` node in between the rows of minions (it can be safely removed later, if you add a background image).
+
+![Battle Area containers](./step-2-battlers-containers.PNG)
+
+Lastly, we are missing some minions.
+These will be implemented in their own scene too, so just add three `PanelContainer` under each team for placeholders.
+
+## The Minion Scene
+
+TBD
+
+## The Action Bar Scene
+
+TBD
