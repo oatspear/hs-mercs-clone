@@ -44,7 +44,7 @@ A good rule of thumb for a simple/minimalistic game is to split entities among *
 3. the *top* layer, or the *UI/HUD* layer, for elements that should always be visible (and likely static) on the screen.
 
 In this tutorial, though, we are going to keep things simple.
-We will only be using the main/middle layer.
+We will only be using the main/middle layer, but we will include the other layers regardless, to make it easier to extend the game later on.
 
 Another big question is whether we want `Node2D` or `Control` nodes.
 We are going for a relatively static game in this tutorial, so `Control` is the best choice.
@@ -59,3 +59,44 @@ Even though we are not using all layers in this tutorial, do not forget to chang
 Set the `BackLayer` to 1, the `MainLayer` to 2 and the `TopLayer` to 3.
 
 ![Layer Property](./step-2-layer-prop.PNG)
+
+Next, we are going to lay out the main elements and containers for the game interface.
+
+## Laying Out Components
+
+Looking at the mock-up for our interface, or the example picture for the *Hearthstone: Mercenaries* game, we can easily identify some of the main UI elements:
+
+- the *history* bar at the left;
+- the central *battle area*;
+- the *bench/party* bar at the right.
+
+These elements are organized horizontally, so start by adding a `HBoxContainer` child node under the `MainLayer`.
+Call it `HBox`.
+Since this is our top-level container, set its *Layout* to *Full Rect*.
+
+![Layout Full Rect](./step-2-layout-full-rect.PNG)
+
+We will not implement the left and right bars in this tutorial, but we still want to have some placeholder in their place.
+We will use `PanelContainer` nodes for this purpose.
+
+Let's focus on the battle area next.
+Its elements are laid out vertically for the most part, so a `VBoxContainer` node is a good candidate.
+We will make some adjustments, compared to *Hearthstone: Mercenaries*, such as moving the main action bar to the bottom.
+
+Let us add these three children under the `HBox`.
+
+1. Add a `PanelContainer` called `LPanel`. This is the placeholder for the *history* bar.
+2. Add a `VBoxContainer` called `BattleArea`.
+3. Add a `PanelContainer` called `RPanel`. This is the placeholder for the *bench* bar.
+
+![HBox Children](./step-2-hbox-children.PNG)
+
+Feel free to mess with the *Separation* property of the `HBox`, under *Custom Constants*.
+You can leave it as it is, or define how far apart each element should be.
+
+Let's focus now on the central battle area.
+
+This area is supposed to be the main focus of our game, and it should take as much space as possible.
+Change its *Size Flags* in the node Inspector. Make sure to check *Expand* under the horizontal flags.
+
+![Size Expand flags](./step-2-size-expand.PNG)
