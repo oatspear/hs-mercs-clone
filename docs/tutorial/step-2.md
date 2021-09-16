@@ -7,7 +7,7 @@ This is something that should be planned early on, and something that should acc
 
 In this case, the interface is highly inspired in the game [Hearthstone: Mercenaries](https://playhearthstone.com/en-gb/news/23699737/prepare-for-mercenaries-coming-october-12).
 
-![Mercenaries Screenshot](https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/ft/FTOKII3HQE851630022615678.jpg)
+<img src="https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/ft/FTOKII3HQE851630022615678.jpg" alt="Mercenaries Screenshot" width="528" height="365">
 
 More specifically, here are some features that we want to implement:
 
@@ -26,7 +26,7 @@ As for the minions themselves, we want to display:
 - an indicator of the minion's Attack and Health values;
 - an indicator of the minion's Speed (once an action is chosen).
 
-Granted, this type of game has room for much more, but defining long-term objectives beyond our reach - and without getting a feel of the actual implemented game - only serves to undermine the development process.
+Granted, this type of game has room for much more, but defining long-term objectives beyond our reach and, without getting a feel of the actual implemented game, it only serves to undermine the development process.
 
 ## Defining Structure
 
@@ -51,6 +51,11 @@ We are going for a relatively static game in this tutorial, so `Control` is the 
 Besides, building a user interface is our major focus, and `Control` nodes are much better suited for that.
 
 With that said, create a new `Control` scene, under `scenes/battle`, and name it `BattleScene`.
-Add three `CanvasLayer` child nodes to the `BattleScene`.
+Add three `CanvasLayer` child nodes to the `BattleScene` and attach a new script to it.
 
 ![UI Layers](./step-2-ui-layers.PNG)
+
+Even though we are not using all layers in this tutorial, do not forget to change the *Layer* property of each `CanvasLayer`, to guarantee their order.
+Set the `BackLayer` to 1, the `MainLayer` to 2 and the `TopLayer` to 3.
+
+![Layer Property](./step-2-layer-prop.PNG)
