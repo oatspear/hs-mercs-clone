@@ -9,3 +9,7 @@ For this type of game, we will create the following files and directories.
 - `scenes/battle`: a sub-directory to hold scenes related to battle only.
 - `scripts`: a directory to hold general-purpose scripts, or scripts that are not tied to a particular scene (not required for this tutorial).
 - `Test.tscn`: a test scene that will act as our main scene.
+
+![Directory Structure](./step-1-dir-structure.png)
+
+This is the same structure that you can see at the root of this repository.
