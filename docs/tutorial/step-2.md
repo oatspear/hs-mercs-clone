@@ -123,7 +123,75 @@ These will be implemented in their own scene too, so just add three `PanelContai
 
 ## The Minion Scene
 
-TBD
+For minions, we want to display them in some kind of portrait, as shown in the sketch below.
+
+![Minion Layout Sketch](./step-2-minion-layout.PNG)
+
+To simplify things, create a new `Minion` scene, under `scenes/battle`, and choose `PanelContainer` for its root node.
+This node is not supposed to take up the whole screen, so, under *Layout*, set it to *Top Left*.
+
+We are going to display the various sub-elements of a minion vertically, except for the Speed tag (more on that later).
+Add a `VBoxContainer` to the new `Minion` container, call it `Parts`.
+
+Now, let's add the various sub-elements of a minion under `Parts`.
+
+1. Add a `Label` node, call it `Status`. This is for the status conditions (unused in this tutorial). Under its *Vertical Size Flags*, uncheck *Fill* and check *Shrink Center*.
+2. Add a `MarginContainer` node, call it `Sprite`. This is where the picture will go. Under its *Size Flags* check *Expand*, both horizontally and vertically.
+3. Add an `HBoxContainer` node, call it `Stats`. This is where *Attack* and *Health* will go.
+4. Add a `Label` node, call it `Tag`. This is where the minion type will be displayed (unused in this tutorial). Under its *Vertical Size Flags*, uncheck *Fill* and check *Shrink Center*.
+
+![Minion Node Children](./step-2-minion-children.PNG)
+
+Under the `Sprite` node, we are going to add a `TextureRect` node, called `Texture`.
+This will hold the minion's picture.
+You can set the desired texture right away.
+Remember to change its *Stretch Mode* to *Keep Centered* in the node Inspector.
+
+![Texture Keep Centered](./step-2-texture-mode.PNG)
+
+Next, add a `Panel` node under `Sprite`, and call it `Highlight`.
+This will be used to show a highlight on the minion's portrait later on, when the mouse hovers over the minion, or when it is the minion's turn.
+
+![Sprite Node Children](./step-2-sprite-children.PNG)
+
+To stylize this panel, go to *Custom Styles* in the node Inspector and add a new `StyleBoxFlat`.
+Change its attributes as you see fit, or take the following suggestions.
+
+![Highlight Style Box](./step-2-highlight-style.PNG)
+
+Now, under the `Stats` container, we are going to add the following children.
+
+1. `Label` node called `AttackLabel` with the text `A:`.
+2. `Label` node called `AttackValue` (with the optional text `00` or `?`).
+3. `HSeparator` node, with its horizontal *Size Flags* checking *Expand*.
+4. `Label` node called `HealthValue` with the text `H:`.
+5. `Label` node called `HealthValue` (with the optional text `00` or `?`).
+
+And that makes up most of our minion portrait.
+It should be looking like the following.
+
+![Minion Node Children](./step-2-minion-children-2.PNG)
+
+We are just missing the Speed tag, which is going to have a special placement.
+Directly under `Minion`, and after `Parts`, add a new `MarginContainer` node.
+Call it `Overlay`.
+Optionally, set some custom margins for it, under *Custom Constants*  in the node Inspector.
+Set all margins, for example, to 4 pixels.
+
+Under the new `Overlay`, we are going to add a `PanelContainer` node, called `SpeedTag`.
+Change its *Size Flags* to *Shrink End*, horizontally, and to *Shrink Center*, vertically.
+Under *Custom Styles*, in the node Inspector, feel free to add a new `StyleBoxFlat` and stylize it.
+
+Lastly, under the new `SpeedTag`, we are going to add an `HBoxContainer`, called `HBox`, and, under that, add two `Label` nodes.
+The first label is called `SpeedLabel`, with the text `S:`, and the second one is called `SpeedValue`, with the text `?` (just like for *Attack* and *Health* before).
+
+![Minion Node Children](./step-2-minion-children-3.PNG)
+
+Our Minion scene should now be looking similar to this:
+
+![Minion Node Example](./step-2-minion-example.PNG)
+
+Logic and animation will be discussed later on in the tutorial.
 
 ## The Action Bar Scene
 
