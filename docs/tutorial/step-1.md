@@ -13,3 +13,8 @@ For this type of game, we will create the following files and directories.
 ![Directory Structure](./step-1-dir-structure.PNG)
 
 This is the same structure that you can see at the root of this repository.
+
+Before moving on, open the *Project Settings* menu.
+Set `Test.tscn` as the main scene and change the window resolution to 640x360 (for a 16:9 aspect ratio).
+
+![Project Settings](./step-1-project-settings.PNG)
