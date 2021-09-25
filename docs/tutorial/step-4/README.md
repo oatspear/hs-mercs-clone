@@ -264,6 +264,16 @@ func _on_Minion_gui_input(event):
             emit_signal("minion_selected", minion_index)
 ```
 
+There is one last thing to note.
+Some of the node children of `Minion` will capture mouse click events themselves.
+We must modify this behaviour, so that they pass the click event all the way up to the root `Minion` node.
+Otherwise, the callback function we have just defined will only trigger when clicking in certain areas of the minion card.
+
+Go through all the children nodes.
+In the node Inspector, ensure that *Mouse Filter* property is set to *Pass*.
+
+![Mouse Pass](./step-4-mouse-pass.PNG)
+
 ## Conclusion
 
 That is it for the basic logic of a `Minion` scene.
