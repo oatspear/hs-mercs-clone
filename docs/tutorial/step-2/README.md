@@ -193,6 +193,10 @@ Our Minion scene should now be looking similar to this:
 
 Logic and animation will be discussed later on in the tutorial.
 
+At this point, you can go back to the `BattleScene` and replace the minion placeholders with instances of the `Minion` scene.
+
+![Instance Scene](./step-2-instance-minion.PNG)
+
 ## The Action Bar Scene
 
 The action bar will be our main interactive object in the game.
@@ -233,6 +237,8 @@ The five buttons should be:
 With that, we should have a layout similar to the previous picture, and a node tree similar to the following.
 
 ![Action Bar Node Tree](./step-2-action-bar-children.PNG)
+
+At this point, you can go back to the `BattleScene` and replace the action bar placeholder with an instance of the `ActionBar` scene.
 
 This concludes our interface layout.
 All that is left now is to implement the game's logic and add some finishing touches, such as a few simple animations.
