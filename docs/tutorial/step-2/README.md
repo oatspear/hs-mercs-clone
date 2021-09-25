@@ -195,4 +195,44 @@ Logic and animation will be discussed later on in the tutorial.
 
 ## The Action Bar Scene
 
-TBD
+The action bar will be our main interactive object in the game.
+It should allow us to select one out of three minion skills.
+In addition, there should also be an option to skip a turn (do nothing) with a minion.
+
+Lastly, in this game we select all the actions for our minions (one at a time) first, and only then does the game proceed into an action resolution phase.
+It would be nice to have a way to revert our previous choices, in the action selection phase, should we make a mistake.
+
+Summing up, our action bar is, then, a simple panel with a total of 5 buttons.
+
+The minion skill buttons should be dynamic; we want to change the buttons' text according to the skills the minion knows.
+
+![Action Bar Example](./step-2-action-bar.PNG)
+
+Start by creating a new `ActionBar` scene under `scenes/battle`.
+The root node should be a `MarginContainer`.
+
+Set the *Layout* of the action bar to *Bottom Wide*, and, in the node Inspector, change its `y` *Rect/Min. Size* to 40.
+Optionally, under *Custom Constants* set its *Margin Bottom* to 8.
+
+Attach a script to the `ActionBar`, so that we can implement its logic later on.
+
+Now, we want to display our buttons horizontally.
+This should be straightforward.
+Add an `HBoxContainer` child node, called `HBox`, to the action bar.
+Change its *Alignment* property, in the node Inspector, to *Center*.
+Then, add 5 `Button` children to the `HBox`.
+
+The five buttons should be:
+
+1. `Back`, a button to revert our previous choice.
+2. `Skill1`, a button to hold a minion's first skill.
+3. `SKill2`, a button to hold a minion's second skill.
+4. `Skill3`, a button to hold a minion's third skill.
+5. `Skip`, a button to skip a turn (do nothing) with a minion.
+
+With that, we should have a layout similar to the previous picture, and a node tree similar to the following.
+
+![Action Bar Node Tree](./step-2-action-bar-children.PNG)
+
+This concludes our interface layout.
+All that is left now is to implement the game's logic and add some finishing touches, such as a few simple animations.
