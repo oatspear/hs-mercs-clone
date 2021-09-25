@@ -332,7 +332,193 @@ As you can see in the last line, once every minion has its action selected, it i
 
 ## Combat Phase
 
-TBD
+In a more advanced software architecture we would delegate the different steps of the combat phase to different entities.
+For instance, a skill server could implement the mechanics of each skill, while an animation server handled how the mechanics are displayed, and the `BattleScene` implemented the top-level glue.
+To simplify this tutorial, again, we are bundling everything into one place.
 
+Let us start by going over what needs to happen in the Combat phase.
+
+1. Sort the minions by *Speed* value, where lower values should act first.
+2. Go through each minion (in order) and take its select action, target and skill effect.
+3. Resolve the selected action with the provided arguments.
+4. Once all actions are resolved, move to the next round.
+
+Recall also that dead minions should not act.
+We have to add a clause to skip those.
+
+```gdscript
+func _resolve_actions():
+    var minions = _ui_minions.duplicate()
+    minions.sort_custom(self, "_minion_speed_sort")
+    for i in range(len(minions)):
+        if minions[i].minion_health <= 0:
+            continue
+        var j = minions[i].minion_index
+        var action = _input_actions[j]
+        var target = _ui_minions[_input_targets[j]]
+        var effect = _input_effects[j]
+        if action < 0:
+            continue
+        match effect:
+            0:
+                _basic_attack(minions[i], target)
+            1:
+                _safe_attack(minions[i], target, 2)
+            2:
+                _basic_heal(minions[i], target, 6)
+            _:
+                assert(false, "effect not yet implemented")
+    call_deferred("_next_round")
+```
+
+We see a few helper functions here, so let's get into the details of each.
+
+### Sorting Minions by Speed Value
+
+We start by creating a new `Array` holding the references to the `Minion` scenes, as we see in the first line of the function.
+Then, we sort the new array by our speed parameter.
+We do not change the original array, so that we can still access minions by index correctly later on.
+
+```gdscript
+    var minions = _ui_minions.duplicate()
+    minions.sort_custom(self, "_minion_speed_sort")
+```
+
+Now, for the speed sort function.
+This is a function that takes two minions, `a` and `b`, and should return `true` if `a` is *less than* `b`.
+In this context, *less than* means *faster than*.
+
+```gdscript
+var _tie_break_player: bool = true
+var _speed_tied: bool = false
+
+func _minion_speed_sort(a, b):
+    if a.minion_speed < b.minion_speed:
+        return true
+    if a.minion_speed > b.minion_speed:
+        return false
+    if a.minion_index < ENEMY_FIRST_MINION:
+        # player minion
+        if b.minion_index < ENEMY_FIRST_MINION:
+            # both player minions
+            return a.minion_index < b.minion_index
+        # player vs enemy
+        _speed_tied = true
+        return _tie_break_player
+    else:
+        # enemy minion
+        if b.minion_index >= ENEMY_FIRST_MINION:
+            # both enemy minions
+            return a.minion_index < b.minion_index
+        # player vs enemy
+        _speed_tied = true
+        return not _tie_break_player
+```
+
+This is not as trivial as one might have thought initially.
+That is mostly because of the speed tie mechanic.
+
+To break ties between minions of the same team, the minion with the lowest *index* (the one that appears first) wins.
+To break ties between player and enemy minions, we resort to the tie breaker mechanic mentioned before.
+Basically, the player wins all the speed ties in the first round a speed tie happens, then the enemy wins the next time, and so on.
 
 The `_tie_break_player` variable tells whether the tie breaker is in favour of the player, while the `_speed_tied` variable tells whether there was a speed tie in the current round.
+
+### Fetching Selected Actions
+
+There is nothing much to discuss here.
+We traverse the minions *sorted by speed*, get the minion index of each, and then use the index to get the stored actions, targets and effects.
+We skip dead minions, and we skip minions that decide to do nothing on that turn (action is `-1`).
+
+```gdscript
+    for i in range(len(minions)):
+        if minions[i].minion_health <= 0:
+            continue
+        var j = minions[i].minion_index
+        var action = _input_actions[j]
+        var target = _ui_minions[_input_targets[j]]
+        var effect = _input_effects[j]
+        if action < 0:
+            continue
+```
+
+### Implementing Skill Effects
+
+Depending on the selected skill effect, we execute a function that implemented the desired mechanics.
+Unknown effects fall into an `assert(false)` statement, to help with debugging.
+
+```gdscript
+        match effect:
+            0:
+                _basic_attack(minions[i], target)
+            1:
+                _safe_attack(minions[i], target, 2)
+            2:
+                _basic_heal(minions[i], target, 6)
+            _:
+                assert(false, "effect not yet implemented")
+```
+
+All effects are relatively simple in this case, and make use of the Minion Interface we defined previously.
+Note that the implementations presented here are simplified.
+The final version will take animations into consideration, so that the effects do not happen instantly.
+
+#### Basic Attack
+
+A basic attack has both minions deal damage to each other.
+
+```gdscript
+func _basic_attack(attacker, defender):
+    defender.take_damage(attacker.minion_power)
+    attacker.take_damage(defender.minion_power)
+```
+
+#### Safe/Quick Attack
+
+A safe attack deals damage from afar, or without giving the defender an opportunity to respond.
+The attacker does not take damage in return.
+
+```gdscript
+func _safe_attack(attacker, defender, dmg):
+    defender.take_damage(dmg)
+```
+
+#### Basic Heal
+
+A basic heal skill restores some health to a minion.
+
+```gdscript
+func _basic_heal(caster, target, dmg):
+    target.heal_damage(dmg)
+```
+
+### Moving to the Next Round
+
+All that is left is to implement a function that ends the current round, after all actions have been resolved, and starts a new round.
+It is also an appropriate place to check for victory conditions.
+
+```gdscript
+func _next_round():
+    if _speed_tied:
+        _tie_break_player = not _tie_break_player
+        _speed_tied = false
+    for i in range(len(_input_actions)):
+        _input_actions[i] = -1
+        _input_targets[i] = -1
+        _input_effects[i] = -1
+    for i in range(len(_ui_minions)):
+        _ui_minions[i].reset_ui()
+        _ui_minions[i].end_round()
+    _get_player_input()
+```
+
+As we can see, we have to do some house keeping upon ending the round.
+If there was a speed tie in the current round, we should flip the tie breaker in favour of the other player.
+Then, we reset all stored actions, targets and effects (not strictly necessary, but good practice).
+Lastly, we reset the UI of each minion and call its `end_round()` method, for minions to do their own house keeping too (such as updating skill cooldowns).
+
+Once all is done, we move back to the previous phase, the Planning phase, starting with the collection of player input.
+As seen previously, this will pop up the action bar, and close the loop over all the previous steps.
+
+This concludes the main game logic.
+All that is missing now is some animation and finishing touches, so that things do not look so static, and so that updates are not instantaneous.
