@@ -5,5 +5,5 @@ It covers only the aspects of putting together a battle scene and minimal battle
 
 Quick links:
 
-1. [Project Structure](./step-1.md)
-2. [Interface Mock-up](./step-2.md)
+1. [Project Structure](./step-1/README.md)
+2. [Interface Mock-up](./step-2/README.md)
